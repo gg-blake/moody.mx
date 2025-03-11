@@ -23,7 +23,7 @@ export default function NavBar({ids}: {ids: string[]}) {
     }, [])
 
     return (
-        <div id="navbar" style={{visibility: visible ? "visible" : "hidden"}} className=" w-screen h-auto text-xs xs:text-base sm:justify-start opacity-1 overflow-x-visible p-3 flex flex-row gap-3 z-[999] fixed top-0 border-b-[1px] border-primary-50 bg-primary-950 transition-opacity">
+        <div id="navbar" style={{visibility: visible ? "visible" : "hidden"}} className=" w-screen h-auto text-xs xs:text-base sm:justify-start opacity-1 overflow-x-visible p-3 flex flex-row gap-3 z-999 fixed top-0 border-b-[1px] border-primary-50 bg-primary-950 transition-opacity">
             {ids.map((id: string, i: number) => <ColorBlendButton key={`navbar-colorblendbutton-${i}`} className="relative translate-y-3" href={"#"+id}>{id}</ColorBlendButton>)}
             <ColorPicker className="bg-primary-950 shadow-md" />
         </div>

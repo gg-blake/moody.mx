@@ -11,7 +11,7 @@ import Statement from '../../components/statement';
 
 export default function Home() {
   return (
-    <div className={`w-screen overflow-y-visible overflow-x-clip bg-primary-950 text-primary-50 ${plusJakartaSans.className}`}>
+    <div className={`w-screen overflow-y-visible bg-primary-950 text-primary-50 overflow-x-hidden ${plusJakartaSans.className}`}>
       <NavBar ids={["timeline", "projects", "photos", "contact"]} />
       <Profile />
       <Statement src="profile-cropped.jpg">A full-time student and part-time developer based in Boston, Massachusetts. Interests in full-stack, mobile development. Pursuing a degree in Computer Science at UMass Boston.</Statement>

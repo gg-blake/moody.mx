@@ -63,7 +63,7 @@ export default function Photobook() {
 
     return (
         <div id="photos" className="flex flex-col gap-3 p-3">
-            <div className="sticky top-[calc(70px+.75rem)] p-3 border-primary-50 border-[1px] box-border z-[900] bg-primary-950">
+            <div className="sticky top-[calc(70px+.75rem)] p-3 border-primary-50 border-[1px] box-border z-900 bg-primary-950">
                 <GlitchTitle>Photos</GlitchTitle>
             </div>
             <div className="w-full grid grid-cols-3 gap-6">

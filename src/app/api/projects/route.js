@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 //@ts-nocheck
 const requestOptions = {
     method: "GET",
@@ -5,7 +7,7 @@ const requestOptions = {
     next: {revalidate: 3600}
   };
 
-export default async function fetchGithubData() {
+async function fetchGithubData() {
     try {
         const starredRepos = await fetch("https://api.github.com/users/gg-blake/starred", {next: {revalidate: 3600}})
         .then((response) => response.json())
@@ -42,7 +44,7 @@ export default async function fetchGithubData() {
         }))
         return readmeData
     } catch (e) {
-        return [] as any[]
+        return [];
     }
     
 } 
@@ -52,3 +54,16 @@ export default async function fetchGithubData() {
     const result = await fetchGithubData()
     console.log(result);
 })();*/
+
+export async function GET(){
+  try {
+    const response = await fetchGithubData();
+    if (response.length != 0) {
+      return NextResponse.json(response)
+    } else {
+      return NextResponse.json({ message: 'fetch failed!' })
+    }
+  } catch (err) {
+    return NextResponse.json({ message: 'Internal server error' })
+  }
+}

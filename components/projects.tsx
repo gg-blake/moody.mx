@@ -4,11 +4,17 @@ import GlitchTitle from './glitch_text';
 import { MovingBannerResizeable } from './moving_banner';
 import ColorBlendButton from './colorblendbutton';
 import { Inter } from "next/font/google";
-import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import fetchGithubData from './fetchGithubData';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import remarkBreaks from 'remark-breaks';
+import ReactMarkdown from "react-markdown";
+import plusJakartaSans from '../styles/fonts';
+import style from '../styles/markdown-styles.module.css';
+import 'highlight.js/styles/github-dark.css';
 
 const inter = Inter({ subsets: ["latin"] });
+
+import { Badge } from "@/components/ui/badge"
 
 import {
     Carousel,
@@ -39,6 +45,7 @@ import {
 } from "@/components/ui/drawer"
 
 import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 
 
 
@@ -210,52 +217,95 @@ function YearContainer({ children, year, order, length }: { children?: any, year
 
 
 const fetchProjectEntries: Promise<any[]> = new Promise((resolve, reject) => {
-    fetchGithubData()
+    fetch('http://www.moody.mx/api/projects')
+        .then((response) => response.json())
         .then(result => resolve(result))
         .catch(err => reject(err))
 })
 
 function ProjectEntry({ entry }: { entry: any }) {
+    const [s, setS] = useState([Math.floor(Math.random() * 20), Math.floor(Math.random() * 80)])
+    const elementRef = useRef<HTMLDivElement>(null!);
+    const [windowDimensions, setWindowDimensions] = useState<{width: number, height: number}>({width: 0, height: 0});
+
+    useEffect(() => {
+        if (!elementRef.current) return;
+        setWindowDimensions({width: elementRef.current.offsetWidth, height: elementRef.current.offsetHeight});
+    }, [])
+
     return (
-        <Card className='bg-transparent text-white h-full rounded-none flex flex-col justify-between'>
-            <CardHeader>
+        <Card className='group bg-transparent text-white h-full rounded-none flex flex-col overflow-hidden'>
+            <CardHeader className='pb-3'>
                 <CardTitle className="text-3xl font-light">{entry.name}</CardTitle>
+                <div>
+                    {entry.topics.map((topic: string, index: number) => 
+                    <Badge key={index} variant="outline" className='text-white m-1 text-[10px] rounded-none inline-block'>{topic}</Badge>
+                )}</div>
+                
             </CardHeader>
             <CardContent >
+                <CardDescription>
+                    {entry.description}
+                </CardDescription>
+            </CardContent>
+            <CardFooter className='flex flex-col items-start px-0 gap-0'>
+                
+                <CardContent className='flex flex-row gap-3'>
+                <a href={entry.html_url}>{entry.name}.git</a>
+                <Separator orientation='vertical' className='opacity-50' />
                 <Drawer>
+                    
                     <DrawerTrigger className="rounded-none">
-                        <Button variant={'outline'} className='rounded-none bg-transparent border-white'>Open</Button>
+                        <a>README.md</a>
                     </DrawerTrigger>
-                    <DrawerContent className="h-2/3 border-white border-1 rounded-none bg-black z-10000">
-                        <DrawerDescription className='grid grid-cols-3 w-full h-full z-[10000]'>
-                            <Card className='p-3 inherit rounded-none border-l-0 border-t-0 border-b-0 border-r-1 border-neutral-900 text-white bg-transparent'>
-                                <CardHeader className='px-3'>
-                                    <CardTitle className='text-3xl font-light p-0'>{entry.name}</CardTitle>
+                    <DrawerContent className="h-5/6 border-white border-1 rounded-none bg-black z-10000">
+                        <DrawerDescription className='flex w-full max-h-full overflow-y-auto z-[10000] flex-col'>
+                            <Card className='p-3 inherit rounded-none border-none text-white bg-transparent col-span-2 flex-grow w-full'>
+                                <CardHeader className={`p-3 ${plusJakartaSans.className}`}>
+                                    <GlitchTitle className='absolute'>{entry.name}</GlitchTitle>
+                                    <a className="ml-[2px]" href={entry.html_url}>Go to this repo →</a>
+                                    <div>
+                                        <Badge variant="outline" className='text-neutral-600 border-neutral-600 m-1 rounded-none'>Created at {new Date(entry.created_at).toLocaleDateString().replaceAll("/", ".")}</Badge>
+                                        <Badge variant="outline" className='text-neutral-600 border-neutral-600 m-1 rounded-none'>Updated at {new Date(entry.updated_at).toLocaleDateString().replaceAll("/", ".")}</Badge>
+                                        <Badge variant="outline" className='text-neutral-600 border-neutral-600 m-1 rounded-none'>Created at {new Date(entry.pushed_at).toLocaleDateString().replaceAll("/", ".")}</Badge>
+                                        {entry.topics.map((topic: string, index: number) => 
+                                        <Badge key={index} variant="outline" className='text-white m-1 rounded-none'>{topic}</Badge>
+                                    )}</div>
                                 </CardHeader>
-                                <CardDescription className='text-lg font-light text-wrap px-3 max-h-full overflow-y-scroll'>
-                                    <Markdown remarkPlugins={[remarkGfm]}>{entry.description_md}</Markdown>
-                                </CardDescription>
+                                <div className={`text-lg font-light text-wrap px-3 ${plusJakartaSans.className}`}>
+                                    <ReactMarkdown 
+                                        remarkPlugins={[remarkGfm, remarkBreaks]}
+                                        rehypePlugins={[rehypeHighlight]}
+                                        >{entry.description_md}</ReactMarkdown>
+                                </div>
                             </Card>
                         </DrawerDescription>
                     </DrawerContent>
                 </Drawer>
-            </CardContent>
+                </CardContent>
+                <CardContent className='text-[10px] text-neutral-600 flex flex-row justify-between w-full flex-grow h-full'>
+                    
+                </CardContent>
+            </CardFooter>
+            
         </Card>
     )
 }
 
 export default function FeaturedProjects() {
-
+    
     const projects = use(fetchProjectEntries);
 
     return (
-        <div className='p-3 flex flex-col gap-y-3'>
-            <GlitchTitle className='border-white border-1 p-3'>Featured Projects</GlitchTitle>
-            <div className='font-inherit w-screen px-12 flex flex-col'>
-                <Carousel orientation='horizontal' className="relative flex w-full max-w-2xl gap-2 border-white border-x-1 box-border">
-                    <CarouselContent className="-ml-1">
-                        {projects.map((entry: any, index: number) =>
-                            <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
+        <div className='p-3 flex flex-col gap-y-3 h-screen'>
+            <GlitchTitle className='border-white border-1 p-3 text-wrap'>Featured Projects</GlitchTitle>
+            <div className='font-inherit w-screen px-12 flex flex-col h-auto'>
+                <Carousel orientation='horizontal' className="relative flex w-[calc(100%-24px)] gap-3  box-border h-full">
+                    <CarouselContent className="-ml-1 h-full">
+                        {projects
+                        .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+                        .map((entry: any, index: number) =>
+                            <CarouselItem key={index} className=" md:basis-1/2 lg:basis-1/3">
                                 <ProjectEntry entry={entry} />
                             </CarouselItem>
                         )}

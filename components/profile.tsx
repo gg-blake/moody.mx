@@ -29,15 +29,15 @@ export default function Profile() {
                     <div className="w-auto h-auto font-bold">
                     
                     <GlitchTitle className='font-semibold text-5xl sm:text-[200px] mix-blend-exclusion'>blake</GlitchTitle>
-                    <h1 className='opacity-20 font-bold'>moody.mx</h1>
+                    <div className='opacity-20 font-bold text-white'>moody.mx</div>
                     </div>
                 </div>
                 
                 <div className="absolute bottom-3 grid grid-cols-2 grid-rows-2 w-[250px] h-auto text-sm gap-3">
-                    <ColorBlendButton className="relative" target="_blank" rel="noreferrer" href="https://www.instagram.com/blayyyyyk/">Instagram</ColorBlendButton>
-                    <ColorBlendButton className="relative" target="_blank" rel="noreferrer" href="https://github.com/gg-blake">Github</ColorBlendButton>
-                    <ColorBlendButton className="relative" target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/blake-moody-2626ba11b/">LinkedIn</ColorBlendButton>
-                    <ColorBlendButton className="relative" target="_blank" rel="noreferrer" href="blake@mpsych.org">Email</ColorBlendButton>
+                    <ColorBlendButton className="relative text-white" target="_blank" rel="noreferrer" href="https://www.instagram.com/blayyyyyk/">Instagram</ColorBlendButton>
+                    <ColorBlendButton className="relative text-white" target="_blank" rel="noreferrer" href="https://github.com/gg-blake">Github</ColorBlendButton>
+                    <ColorBlendButton className="relative text-white" target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/blake-moody-2626ba11b/">LinkedIn</ColorBlendButton>
+                    <ColorBlendButton className="relative text-white" target="_blank" rel="noreferrer" href="blake@mpsych.org">Email</ColorBlendButton>
 
                 </div>
                 <div className='absolute top-6 right-6'>

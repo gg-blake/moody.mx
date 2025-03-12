@@ -1,7 +1,19 @@
+'use client';
 import { useRef, useEffect, useState } from 'react'
 
 interface MovingBannerProps {
     children: string;
+}
+
+const bannerRotatingWords = [
+    {transform: "translateX(0)"},
+    {transform: "translateX(-100%)"},
+]
+
+const bannerRotatingWordsTiming = {
+    duration: 20000,
+    iterations: Infinity,
+    easing: "linear"
 }
 
 function MovingBanner({children}: MovingBannerProps) {
@@ -16,15 +28,8 @@ function MovingBanner({children}: MovingBannerProps) {
         const bannerContentSecond = bannerContentSecondRef.current;
         bannerContainer.style.width = `${bannerContent.offsetWidth}px`;
         bannerContainer.style.height = `${bannerContent.offsetHeight}px`;
-        const bannerRotatingWords = [
-            {transform: "translateX(0)"},
-            {transform: "translateX(-100%)"},
-        ]
-        const bannerRotatingWordsTiming = {
-            duration: 20000,
-            iterations: Infinity,
-            easing: "linear"
-        }
+        
+        
         bannerContent.animate(bannerRotatingWords, bannerRotatingWordsTiming);
         bannerContentSecond.animate(bannerRotatingWords, bannerRotatingWordsTiming);
     }, [])
@@ -55,11 +60,13 @@ function MovingBannerResizeable(props: MovingBannerResizeableProps) {
     )
 }
 
+interface Size {
+    width: number;
+    height: number;
+}
+
 function MovingBannerFrame() {
-    interface Size {
-        width: number;
-        height: number;
-    }
+    
     const [windowDimensions, setWindowDimensions] = useState<Size>({width: 0, height: 0});
 
     useEffect(() => {
@@ -72,10 +79,10 @@ function MovingBannerFrame() {
 
     return (
         <div className="w-screen h-screen absolute top-0 left-0 overflow-clip leading-snug font-mono text-primary-50">
-            <MovingBannerResizeable className="absolute text-[9px] bg-primary-950 origin-bottom bottom-0" length={windowDimensions.width} count={Math.ceil(windowDimensions.width / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>
-            <MovingBannerResizeable className="top-0 absolute text-[9px] bg-primary-950 origin-center rotate-180" length={windowDimensions.width} count={Math.ceil(windowDimensions.width / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>
-            <MovingBannerResizeable className="absolute text-[9px] bg-primary-950 origin-bottom-left rotate-90 translate-y-[-16px]" length={windowDimensions.height} count={Math.ceil(windowDimensions.height / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>
-            <MovingBannerResizeable className="right-0 absolute text-[9px] bg-primary-950 origin-top-right rotate-[-90deg] translate-x-[-12px]" length={windowDimensions.height} count={Math.ceil(windowDimensions.height / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>
+            <MovingBannerResizeable className="absolute text-[9px] bg-primary-950 origin-bottom bottom-0 bg-black" length={windowDimensions.width} count={Math.ceil(windowDimensions.width / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>
+            <MovingBannerResizeable className="top-0 absolute text-[9px] bg-primary-950 origin-center rotate-180 bg-black" length={windowDimensions.width} count={Math.ceil(windowDimensions.width / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>
+            <MovingBannerResizeable className="absolute text-[9px] bg-primary-950 origin-bottom-left rotate-90 translate-y-[-16px] bg-black" length={windowDimensions.height} count={Math.ceil(windowDimensions.height / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>
+            <MovingBannerResizeable className="right-0 absolute text-[9px] bg-primary-950 origin-top-right rotate-[-90deg] translate-x-[-12px] bg-black" length={windowDimensions.height} count={Math.ceil(windowDimensions.height / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>
             <div className="w-[calc(100%_-_24px)] h-[calc(100%_-_24px)] absolute left-[12px] top-[12px] border-[1px] border-primary-50"></div>
             <div className="w-full h-full absolute left-0 top-0 border-b-[1px] border-primary-50"></div>
         </div>

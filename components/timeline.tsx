@@ -333,16 +333,14 @@ async function getCourses() {
             let newObj = {};
             // @ts-ignore
             course.map((item, index) => {
-                console.log(fields)
+                
                 // @ts-ignore
                 newObj[fields[index]] = item;
                 
             });
             responseJson.push(newObj);
         })
-        // @ts-ignore
-        console.log(responseJson);
-        // @ts-ignore
+        //@ts-ignore
         return responseJson;
     } catch (error) {
       throw error;
@@ -504,9 +502,6 @@ function CourseEvent({course, index, focusedEvent, onClick, onReset}: {course: C
 
 function ProgramEvent({program, courses}: {program: Program, courses: Course[]}) {
     const [focusedEvent, setFocusedEvent] = useState<number>(-1);
-    useEffect(() => {
-        console.log(program);
-    }, [])
     // {props.length > 0 && <div className="mt-3"><EventCounter count={props.events.length} bubbleSize={30} maxItems={3} spacingX={15} spacingY={0} /></div>}
 
     return (

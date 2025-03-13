@@ -1,6 +1,6 @@
 "use client"
 import { useState, use } from "react";
-import { Program, Course } from "../../components/timeline_type";
+import { Program, Course } from "../../lib/types";
 
 function CourseEvent({ course, index, focusedEvent, onClick, onReset }: { course: Course, index: number, focusedEvent: number, onClick: () => void, onReset: () => void }) {
     const visibility = (focusedEvent == index || focusedEvent == -1) ? "visible" : "hidden";

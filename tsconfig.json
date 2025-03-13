@@ -36,8 +36,9 @@
     "src/app/api/files/resume/route.js",
     "src/app/api/files/json/courses/fields/route.js",
     "src/app/api/files/programs/route.js",
-    "components/fetchGithubData.ts"
-, "src/app/api/projects/route.js"  ],
+    "src/app/serverComponents/fetchGithubData.ts",
+    "src/app/api/projects/route.js"
+  ],
   "exclude": [
     "node_modules"
   ]

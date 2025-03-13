@@ -65,7 +65,7 @@ interface Size {
     height: number;
 }
 
-function MovingBannerFrame() {
+export default function Banner() {
     
     const [windowDimensions, setWindowDimensions] = useState<Size>({width: 0, height: 0});
 
@@ -88,5 +88,3 @@ function MovingBannerFrame() {
         </div>
     )
 }
-
-export { MovingBannerFrame, MovingBannerResizeable };

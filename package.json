@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@next/env": "^15.1.7",
+    "@octokit/rest": "^21.1.1",
+    "@octokit/types": "^13.8.0",
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.2",

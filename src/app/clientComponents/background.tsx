@@ -1,3 +1,4 @@
+"use client"
 import * as THREE from 'three'
 import { createRoot } from 'react-dom/client'
 import React, { useEffect, useRef, useState } from 'react'
@@ -149,7 +150,7 @@ void main() {
 }
 `
 
-export default function FlowFieldBG() {
+export default function Background() {
     return (
         <Canvas className="absolute top-0 left-0 z-0">
 			<ambientLight intensity={Math.PI / 2} />

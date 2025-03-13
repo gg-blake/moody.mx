@@ -1,7 +1,8 @@
-import styles from '../styles/Home.module.css';
+"use client"
+import styles from '../../../styles/Home.module.css';
 import { useEffect, useState } from 'react';
 
-export default function GlitchTitle(props: {children: string, className?: string, auraText?: string}) {
+export default function Heading(props: {children: string, className?: string, auraText?: string}) {
     const [particles, setParticles] = useState([]);
 
     return (

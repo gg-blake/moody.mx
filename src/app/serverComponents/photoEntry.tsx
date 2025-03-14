@@ -151,8 +151,8 @@ function PhotoMetadataExpandedView({ metadata }: { metadata: ImageMediaMetadata 
                     <Entry title="shutter speed" value={metadata.exposureTime + "s" || "unknown"}>
                         <Image src="/shutter_speed.svg" alt="shutter_speed.svg" width={15} height={15} />
                     </Entry>
-                    <Entry title="" value={metadata.whiteBalance || "unknown"}>
-                        <div className="bg-white border-1 border-black text-black text-[10px] px-1 leading-0.5 font-bold">ISO</div>
+                    <Entry title="" value={metadata.isoSpeed || "unknown"}>
+                        <div className="bg-white border-1 border-black text-black text-[10px] px-1 flex justify-center items-center text-center font-bold">ISO</div>
                     </Entry>
                     <Entry title="focal length" value={metadata.focalLength + "mm" || "unknown"}>
                         <svg className="fill-white inline-block" xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 -960 960 960" width="15"><path d="M447.615-613.845 582.23-845.768q86 22.462 154 84.923t98.846 147H447.615Zm-101.384 96.538L213.463-750.384q52.461-51.461 120.691-80.538Q402.385-859.999 480-859.999q14.154 0 32.5 1.693 18.346 1.692 30.423 3.692L346.231-517.307ZM112.232-385.385q-6-24.769-9.115-48.038-3.116-23.27-3.116-46.577 0-67.154 22.231-127.846 22.231-60.692 63.846-112.307l192.769 334.768H112.232Zm268.076 271.922q-88.307-23.231-157.384-86.077-69.077-62.846-98.384-147.769h389.537L380.308-113.463ZM480-100.001q-15 0-31.462-2-16.461-2-28.923-4l195.692-334.384 131.615 230.384q-52.077 51.461-120.692 80.73-68.615 29.27-146.23 29.27Zm293.922-139.846L581.153-575.384h266.615q5.615 23.615 8.923 47.653 3.308 24.039 3.308 47.731 0 67.307-22.962 128.23-22.961 60.923-63.115 111.923Z"/></svg>

@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import remarkBreaks from 'remark-breaks';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex'
 import ReactMarkdown from "react-markdown";
 import plusJakartaSans from '../../../styles/fonts';
 import 'highlight.js/styles/github-dark.css';
@@ -30,11 +32,10 @@ import {
     DrawerContent,
     DrawerDescription,
     DrawerFooter,
-    DrawerHeader,
     DrawerTitle,
-    DrawerTrigger,
+    DrawerTrigger as GenericDrawerTrigger,
 } from "@/components/ui/drawer"
-import { Separator } from "@/components/ui/separator"
+
 
 
 interface ProjectEntry {
@@ -47,27 +48,28 @@ interface ProjectEntry {
     commitAPIUrl?: string;
 }
 
+function DrawerTrigger({ project }: { project: Project }) {
+    return (
+        <GenericDrawerTrigger className="rounded-none flex text-blue-400 text-left flex-col">
+            <CardTitle className="text-3xl font-light text-left"><a>{project.name}</a></CardTitle>
+            <span className='-ml-1 mt-3'>
+            {project.topics.map((topic: string, index: number) =>
+                <Badge key={index} variant="outline" className='text-white mx-1 text-[10px] rounded-none inline-block'>{topic}</Badge>
+            )}
+            </span>
+            <CardDescription>
+                {project.description}
+            </CardDescription>
+        </GenericDrawerTrigger>
+    )
+}
+
 function ProjectEntry({ project }: { project: Project }) {
     return (
         <Card className='group bg-transparent text-white h-full rounded-none flex flex-col overflow-hidden'>
             <CardContent className="py-3">
                 <Drawer>
-                    
-                    
-                    <div className='flex flex-col gap-3'>
-                            <DrawerTrigger className="rounded-none flex text-blue-400 text-left">
-                                <CardTitle className="text-3xl font-light text-left"><a>{project.name}</a></CardTitle>
-                            </DrawerTrigger>
-                        <div className='hidden md:visible'>
-                            {project.topics.map((topic: string, index: number) =>
-                                <Badge key={index} variant="outline" className='text-white m-1 text-[10px] rounded-none inline-block'>{topic}</Badge>
-                            )}
-                        </div>
-                        <CardDescription>
-                            {project.description}
-                        </CardDescription>
-                    </div>
-                    
+                    <DrawerTrigger project={project} />
                     <DrawerContent className="h-5/6 border-white border-1 rounded-none bg-black z-10000">
                         <DrawerDescription className='flex w-full max-h-full overflow-y-auto z-[10000] flex-col'>
                             <Card className='p-3 inherit rounded-none border-none text-white bg-transparent col-span-2 flex-grow w-full'>
@@ -82,10 +84,10 @@ function ProjectEntry({ project }: { project: Project }) {
                                             <Badge key={index} variant="outline" className='text-white m-1 rounded-none'>{topic}</Badge>
                                         )}</div>
                                 </CardHeader>
-                                <div className={`text-lg font-light text-wrap px-3 ${plusJakartaSans.className}`}>
+                                <div className={`text-lg font-light text-wrap px-3 overflow-x-hidden ${plusJakartaSans.className}`}>
                                     <ReactMarkdown
-                                        remarkPlugins={[remarkGfm, remarkBreaks]}
-                                        rehypePlugins={[rehypeHighlight]}
+                                        remarkPlugins={[remarkGfm, remarkBreaks, remarkMath]}
+                                        rehypePlugins={[rehypeHighlight, rehypeKatex]}
                                     >{project.description_md}</ReactMarkdown>
                                 </div>
                             </Card>

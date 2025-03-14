@@ -6,6 +6,7 @@ import { Canvas, useFrame, ThreeElements } from '@react-three/fiber';
 import { Plane } from '@react-three/drei';
 import { shaderMaterial } from '@react-three/drei';
 import { useThree } from '@react-three/fiber'
+import { Environment, Html, OrbitControls } from "@react-three/drei";
 
 const getDefaultUniforms = () => {
     return {
@@ -139,8 +140,8 @@ precision mediump float;
 varying vec4 _pos;
 
 void main() {
-	float f  = fract (_pos.z * 50.0);
-	float df = fwidth(_pos.z * 100.0);
+	float f  = fract (_pos.y * 50.0);
+	float df = fwidth(_pos.x * 100.0);
 
 	float g = smoothstep(df * 1.0, df * 2.0, f);
 

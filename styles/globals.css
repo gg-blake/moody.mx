@@ -44,6 +44,17 @@
   --radius-sm: calc(var(--radius) - 4px);
 }
 
+@font-face {
+  font-family: 'vcroct'; /* Replace with your desired font family name */
+  src: url('/fonts/vcr_oct.ttf') format('ttf'); /* Replace with your actual font file */
+  font-weight: 400; /* Or other desired weight */
+  font-style: normal; /* Or other desired style */
+}
+
+.vcr-text {
+  font-family: 'vcroct';
+}
+
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still

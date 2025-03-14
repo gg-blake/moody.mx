@@ -52,7 +52,7 @@ interface MovingBannerResizeableProps {
 
 const ESTIMATED_TEXT_LENGTH = 280.267;
 
-function MovingBannerResizeable(props: MovingBannerResizeableProps) {
+export function MovingBannerResizeable(props: MovingBannerResizeableProps) {
     return (
         <div className={`${props.className} flex flex-row overflow-x-clip`}>
             {[...Array(props.count)].map((_, i) => (<MovingBanner key={`moving-banner-${i}`}>{props.children}</MovingBanner>))}

@@ -133,3 +133,131 @@ export interface Program {
     "Program Description": string;
     "Events": Course[];
 }
+
+export interface PhotosResponse {
+  kind: string
+  etag: string
+  selfLink: string
+  incompleteSearch: boolean
+  items: Photo[]
+}
+
+export interface Photo {
+  kind: string
+  userPermission: UserPermission
+  fileExtension: string
+  md5Checksum: string
+  selfLink: string
+  ownerNames: string[]
+  lastModifyingUserName: string
+  editable: boolean
+  writersCanShare: boolean
+  downloadUrl: string
+  mimeType: string
+  parents: Parent[]
+  thumbnailLink: string
+  appDataContents: boolean
+  iconLink: string
+  shared: boolean
+  lastModifyingUser: LastModifyingUser
+  owners: Owner[]
+  headRevisionId: string
+  copyable: boolean
+  etag: string
+  alternateLink: string
+  embedLink: string
+  webContentLink: string
+  fileSize: string
+  copyRequiresWriterPermission: boolean
+  spaces: string[]
+  id: string
+  title: string
+  labels: Labels
+  explicitlyTrashed: boolean
+  createdDate: string
+  modifiedDate: string
+  markedViewedByMeDate: string
+  quotaBytesUsed: string
+  version: string
+  originalFilename: string
+  capabilities: Capabilities
+  imageMediaMetadata: ImageMediaMetadata
+}
+
+export interface UserPermission {
+  id: string
+  type: string
+  role: string
+  kind: string
+  selfLink: string
+  etag: string
+  pendingOwner: boolean
+}
+
+export interface Parent {
+  selfLink: string
+  id: string
+  isRoot: boolean
+  kind: string
+  parentLink: string
+}
+
+export interface LastModifyingUser {
+  displayName: string
+  kind: string
+  isAuthenticatedUser: boolean
+  permissionId: string
+  emailAddress: string
+  picture: Picture
+}
+
+export interface Picture {
+  url: string
+}
+
+export interface Owner {
+  displayName: string
+  kind: string
+  isAuthenticatedUser: boolean
+  permissionId: string
+  emailAddress: string
+  picture: Picture2
+}
+
+export interface Picture2 {
+  url: string
+}
+
+export interface Labels {
+  viewed: boolean
+  restricted: boolean
+  starred: boolean
+  hidden: boolean
+  trashed: boolean
+}
+
+export interface Capabilities {
+  canEdit: boolean
+  canCopy: boolean
+}
+
+export interface ImageMediaMetadata {
+  flashUsed?: boolean
+  meteringMode?: string
+  exposureMode?: string
+  colorSpace?: string
+  whiteBalance?: string
+  width: number
+  height: number
+  rotation: number
+  date?: string
+  cameraMake?: string
+  cameraModel?: string
+  exposureTime?: number
+  aperture?: number
+  focalLength?: number
+  isoSpeed?: number
+  exposureBias?: number
+  maxApertureValue?: number
+  lens?: string
+}

@@ -123,7 +123,7 @@ function PhotoMetadataExpandedView({ metadata }: { metadata: ImageMediaMetadata 
             <div className="w-auto flex flex-row p-1 gap-3 items-center justify-center">
                 {children}
                 {title}
-                <span className="w-[10px] h-[10px] rounded-full bg-white scale-[50%]"></span>
+                {title != ""  && <span className="w-[10px] h-[10px] rounded-full bg-white scale-[50%]"></span>}
                 {value}
             </div>
         )
@@ -135,15 +135,24 @@ function PhotoMetadataExpandedView({ metadata }: { metadata: ImageMediaMetadata 
                 Hello
             </DrawerTitle>
             <div className="grid grid-rows-2 h-full relative">
-                <CardContent className="flex flex-col items-end text-white bg-transparent font-light">
+                <CardContent className="flex flex-col text-center lg:items-end text-white bg-transparent font-light">
+                    <Entry title="" value={ metadata.date?.replace(":", "/").replace(":", "/") || "unknown"}>
+                        <Image src="/date.svg" alt="date.svg" width={15} height={15} />
+                    </Entry>
+                    <Entry title="" value={(metadata.width || "unknown") + " x " + (metadata.height || "unknown")}>
+                        <Image src="/dimensions.svg" alt="dimensions.svg" width={15} height={15} />
+                    </Entry>
+                    <Entry title="" value={(metadata.cameraMake || "unknown") + " " + (metadata.cameraModel || "unknown")}>
+                        <Image src="/camera_model.svg" alt="camera_model.svg" width={15} height={15} />
+                    </Entry>
                     <Entry title="aperture" value={"f/" + metadata.aperture || "unknown"}>
                         <Image src="/aperture.svg" alt="aperture.svg" width={15} height={15} />
                     </Entry>
                     <Entry title="shutter speed" value={metadata.exposureTime + "s" || "unknown"}>
                         <Image src="/shutter_speed.svg" alt="shutter_speed.svg" width={15} height={15} />
                     </Entry>
-                    <Entry title="dimensions" value={(metadata.width || "unknown") + " x " + (metadata.height || "unknown")}>
-                        <Image src="/dimensions.svg" alt="dimensions.svg" width={15} height={15} />
+                    <Entry title="" value={metadata.whiteBalance || "unknown"}>
+                        <div className="bg-white border-1 border-black text-black text-[10px] px-1 leading-0.5 font-bold">ISO</div>
                     </Entry>
                     <Entry title="focal length" value={metadata.focalLength + "mm" || "unknown"}>
                         <svg className="fill-white inline-block" xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 -960 960 960" width="15"><path d="M447.615-613.845 582.23-845.768q86 22.462 154 84.923t98.846 147H447.615Zm-101.384 96.538L213.463-750.384q52.461-51.461 120.691-80.538Q402.385-859.999 480-859.999q14.154 0 32.5 1.693 18.346 1.692 30.423 3.692L346.231-517.307ZM112.232-385.385q-6-24.769-9.115-48.038-3.116-23.27-3.116-46.577 0-67.154 22.231-127.846 22.231-60.692 63.846-112.307l192.769 334.768H112.232Zm268.076 271.922q-88.307-23.231-157.384-86.077-69.077-62.846-98.384-147.769h389.537L380.308-113.463ZM480-100.001q-15 0-31.462-2-16.461-2-28.923-4l195.692-334.384 131.615 230.384q-52.077 51.461-120.692 80.73-68.615 29.27-146.23 29.27Zm293.922-139.846L581.153-575.384h266.615q5.615 23.615 8.923 47.653 3.308 24.039 3.308 47.731 0 67.307-22.962 128.23-22.961 60.923-63.115 111.923Z"/></svg>
@@ -154,9 +163,7 @@ function PhotoMetadataExpandedView({ metadata }: { metadata: ImageMediaMetadata 
                     <Entry title="exposure mode" value={metadata.exposureMode || "unknown"}>
                         <Image src="/white_balance.svg" alt="white_balance.svg" width={15} height={15} />
                     </Entry>
-                    <Entry title="model" value={(metadata.cameraMake || "unknown") + " " + (metadata.cameraModel || "unknown")}>
-                        <Image src="/camera_model.svg" alt="camera_model.svg" width={15} height={15} />
-                    </Entry>
+                    
                     <Entry title="color space" value={ metadata.colorSpace || "unknown"}>
                         <Image src="/color_space.svg" alt="color_space.svg" width={15} height={15} />
                     </Entry>
@@ -166,9 +173,7 @@ function PhotoMetadataExpandedView({ metadata }: { metadata: ImageMediaMetadata 
                     <Entry title="size" value={ Math.trunc(metadata.fileSize / 10000) / 100 + "MB" || "unknown"}>
                         <Image src="/file_size.svg" alt="file_size.svg" width={15} height={15} />
                     </Entry>
-                    <Entry title="" value={ metadata.isoSpeed || "unknown"}>
-                        <div className="border-white border-1 text-semibold text-xs w-auto h-auto">ISO</div>
-                    </Entry>
+                    
                 </CardContent>
                 <div className="w-full">
                     <Canvas>
@@ -176,7 +181,6 @@ function PhotoMetadataExpandedView({ metadata }: { metadata: ImageMediaMetadata 
                         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
                         <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
                         <Model />
-                        <OrbitControls />
                     </Canvas>
                 </div>
                 
@@ -185,32 +189,27 @@ function PhotoMetadataExpandedView({ metadata }: { metadata: ImageMediaMetadata 
     )
 }
 
-function PhotoDate({ photo }: { photo: Photo }) {
-    return (
-        <div className="absolute top-[50px] right-3 w-full text-right">
-            <span className="vcr-text">
-                <Image src="/file_size.svg" alt="file_size.svg" width={15} height={15} />
-                { photo.imageMediaMetadata.date?.replace(":", "/").replace(":", "/")}
-            </span>
-        </div>
-    )
-}
-
 function PhotoExpandedView({ photo }: { photo: Photo }) {
+    const [windowDim, setWindowDim] = useState<{width: number, height: number}>({width: 0, height: 0});
+    
+    useEffect(() => {
+        setWindowDim({width: window.innerWidth, height: window.innerHeight});
+    }, [])
+
     return (
         <GenericDrawerContent className="h-5/6 w-full bg-black">
-            <div className="flex flex-row mt-3 h-full">
+            <div className="flex flex-col lg:flex-row-reverse overflow-y-scroll mt-3 lg:h-full ">
+                <Image src={photo.webContentLink} alt={`photobook-${photo.webContentLink}`}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    style={{width: windowDim.width < 1024 ? "100%" : "auto", height: windowDim.width < 1024 ? "auto" : "100%"}}
+                    />
                 <PhotoMetadataExpandedView metadata={{
                     ...photo.imageMediaMetadata,
                     fileSize: photo.fileSize as unknown as number,
                     fileExtension: photo.fileExtension
                 }} />
-                <Image src={photo.webContentLink} alt={`photobook-${photo.webContentLink}`}
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: 'auto', height: '100%'}} />\
-                <PhotoDate photo={photo} />
             </div>
         </GenericDrawerContent>
     )

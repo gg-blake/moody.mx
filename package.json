@@ -20,6 +20,7 @@
     "@react-three/fiber": "^9.1.0",
     "@tailwindcss/postcss": "^4.0.13",
     "@types/three": "^0.174.0",
+    "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.5.2",

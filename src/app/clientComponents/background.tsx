@@ -19,12 +19,12 @@ const initialUniforms = {
 	u_pointsize: { value: 2.0 },
 	u_step: { value: 5.0 },
 	// wave 1
-	u_noise_freq_1: { value: Math.random() * 5 + 0.5 },
-	u_noise_amp_1: { value: 0.2 },
+	u_noise_freq_1: { value: 1.6 },
+	u_noise_amp_1: { value: 0.9 },
 	u_spd_modifier_1: { value: 0.1 },
 	// wave 2
-	u_noise_freq_2: { value: Math.random() * 5 + 0.5 },
-	u_noise_amp_2: { value: 0.3 },
+	u_noise_freq_2: { value: 1.2 },
+	u_noise_amp_2: { value: 0.5 },
 	u_spd_modifier_2: { value: 0.08 }
 }
 

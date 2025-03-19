@@ -236,14 +236,10 @@ function PhotoMiniView({ photo }: { photo: Photo }) {
 }
 
 export default function PhotoEntry({ photo }: { photo: Photo }) {
-    
-
     return (
         <Drawer>
             <PhotoMiniView photo={photo} />
             <PhotoExpandedView photo={photo} />
         </Drawer>
-        
-        
     )
 }

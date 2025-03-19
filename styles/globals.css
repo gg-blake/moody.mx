@@ -55,6 +55,12 @@
   font-family: 'vcroct';
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark; /* Or dark, depending on your needs */
+  }
+}
+
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -80,12 +86,6 @@
   }
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-
-@layer utilities {
-  html {
-    width: 100vw;
-  }
 }
 
 @layer base {

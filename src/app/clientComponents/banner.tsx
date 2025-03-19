@@ -70,15 +70,16 @@ export default function Banner() {
     const [windowDimensions, setWindowDimensions] = useState<Size>({width: 0, height: 0});
 
     useEffect(() => {
-        setWindowDimensions({width: window.innerWidth, height: window.innerHeight});
+        setWindowDimensions({width: document.body.clientWidth, height: document.body.clientHeight});
         /*window.addEventListener('resize', () => {
             if (window.scrollY > window.innerHeight) return;
             location.reload();
         })*/
+       console.log(windowDimensions);
     }, [])
 
     return (
-        <div className="w-screen h-screen absolute top-0 left-0 overflow-clip leading-snug font-mono text-primary-50">
+        <div className="w-full h-full absolute top-0 left-0 overflow-clip leading-snug font-mono text-primary-50">
             <MovingBannerResizeable className="absolute text-[9px] bg-primary-950 origin-bottom bottom-0 bg-black" length={windowDimensions.width} count={Math.ceil(windowDimensions.width / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>
             <MovingBannerResizeable className="top-0 absolute text-[9px] bg-primary-950 origin-center rotate-180 bg-black" length={windowDimensions.width} count={Math.ceil(windowDimensions.width / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>
             <MovingBannerResizeable className="absolute text-[9px] bg-primary-950 origin-bottom-left rotate-90 translate-y-[-16px] bg-black" length={windowDimensions.height} count={Math.ceil(windowDimensions.height / ESTIMATED_TEXT_LENGTH)}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</MovingBannerResizeable>

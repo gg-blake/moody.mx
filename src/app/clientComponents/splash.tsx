@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 
 export default function Splash() {
     return (
-        <div className={`w-screen h-screen flex items-center p-3 justify-center overflow-clip`}>
+        <div className={`w-full max-w-full h-screen flex items-center p-3 justify-center overflow-clip`}>
 
             <div className="absolute w-full h-full">
                 <Background />

@@ -35,7 +35,6 @@ function CourseEvent({ course, index, focusedEvent, onClick, onReset }: { course
 
 export default function TimelineEvent({ program, courses }: { program: Program, courses: Course[] }) {
     const [focusedEvent, setFocusedEvent] = useState<number>(-1);
-    // {props.length > 0 && <div className="mt-3"><EventCounter count={props.events.length} bubbleSize={30} maxItems={3} spacingX={15} spacingY={0} /></div>}
 
     return (
         <div className="flex flex-col sm:flex-row gap-3">
@@ -45,7 +44,6 @@ export default function TimelineEvent({ program, courses }: { program: Program, 
                 <div className="text-base font-normal p-[3px] m-0 w-full text-left sm:text-justify">{program["Program Description"]}</div>
             </div>
             <div style={{ maxWidth: focusedEvent != -1 ? "min(600px, 100%)" : "300px" }} className="w-auto h-auto max-w-full lg:max-w-[300px] flex flex-col gap-3">{courses?.map((course: Course, i: number) => <CourseEvent key={`event-item-${i}`} index={i} course={course} focusedEvent={focusedEvent} onClick={() => setFocusedEvent(i)} onReset={() => setFocusedEvent(-1)} />)}</div>
-
         </div>
     )
 }

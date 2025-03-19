@@ -143,7 +143,7 @@ export default async function Timeline() {
     const programs = await getPrograms();
 
     return (
-        <div id="timeline" className="w-screen h-auto p-3 flex flex-col gap-3 z-40">
+        <div id="timeline" className="w-full h-auto p-3 flex flex-col gap-3 z-40">
             <div className="sticky top-[calc(70px+.75rem)] p-3 border-primary-50 border-[1px] box-border z-900 bg-primary-950">
                 <Heading>Timeline</Heading>
             </div>

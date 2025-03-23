@@ -143,7 +143,7 @@ void main() {
 	float f  = fract (_pos.z * 50.0);
 	float df = fwidth(_pos.z * 100.0);
 
-	float g = smoothstep(df * 1.0, df * 2.0, f);
+	float g = smoothstep(df * 1.0, df * 1.0, f);
 
 	float c = g;
 

@@ -13,7 +13,7 @@ export default function Carousel({ children, heading }: { children: any[], headi
         <div className='max-w-[min(100%,100vw)] p-3 flex flex-col gap-y-3 h-auto'>
             <Heading className='border-primary border-1 p-3 text-wrap'>{heading}</Heading>
             <div className='font-inherit w-full px-12 flex flex-col h-auto'>
-                <GenericCarousel orientation='horizontal' className="relative flex w-full gap-3  box-border h-full">
+                <GenericCarousel orientation='horizontal' className="relative flex w-full gap-3 h-full">
                     <CarouselContent className=" h-full">
                         {children.map((child: any, index: number) => <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">{child}</CarouselItem>)}
                     </CarouselContent>

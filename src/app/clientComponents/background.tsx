@@ -19,11 +19,11 @@ const initialUniforms = {
 	u_pointsize: { value: 2.0 },
 	u_step: { value: 5.0 },
 	// wave 1
-	u_noise_freq_1: { value: 1.6 },
+	u_noise_freq_1: { value: 5 },
 	u_noise_amp_1: { value: 0.9 },
 	u_spd_modifier_1: { value: 0.1 },
 	// wave 2
-	u_noise_freq_2: { value: 1.2 },
+	u_noise_freq_2: { value: 8 },
 	u_noise_amp_2: { value: 0.5 },
 	u_spd_modifier_2: { value: 0.08 }
 }
@@ -55,7 +55,7 @@ function Box(props: ThreeElements['mesh']) {
 	})
 
 	return (
-		<Plane scale={scale} args={[1, 1, 256, 256]}>
+		<Plane scale={scale} args={[1, 1, 512, 512]}>
 			<shaderMaterial
 				ref={matRef}
 				attach='material'
@@ -147,18 +147,21 @@ void main() {
 
 	float c = g;
 
-	gl_FragColor = vec4((1.0 - c) * 0.5, (1.0 - c) * 0.5, (1.0 - c) * 0.5, 1.0);
+	gl_FragColor = vec4((1.0 - c) * 0.5, (1.0 - c) * 0.5, (1.0 - c) * 0.5, (1.0 - c));
 }
 `
 
 export default function Background() {
     return (
-        <Canvas className="absolute top-0 left-0 z-0">
-			<ambientLight intensity={Math.PI / 2} />
-			<spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
-			<pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
-			<Box />
-		</Canvas>
+		<div className="absolute w-screen h-screen top-0 left-0">
+			<Canvas className="absolute top-0 left-0 z-0">
+				<ambientLight intensity={Math.PI / 2} />
+				<spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
+				<pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
+				<Box />
+			</Canvas>
+		</div>
+        
     )
 
 }

@@ -181,27 +181,31 @@
   }
 
   h1 {
-    @apply w-full h-auto py-6 font-medium text-4xl lg:text-6xl flex flex-col gap-3;
+    @apply w-full h-auto py-6 font-medium text-4xl lg:text-6xl flex flex-col gap-3 bg-transparent;
   }
 
   p, li {
-    @apply text-base font-normal m-0 w-full text-left sm:text-justify;
+    @apply text-base font-normal m-0 w-full text-left sm:text-justify bg-transparent;
   }
 
   h2 {
-    @apply w-full h-auto py-[10px] font-medium text-2xl lg:text-4xl flex flex-col gap-3
+    @apply w-full h-auto py-[10px] font-medium text-2xl lg:text-4xl flex flex-col gap-3 bg-transparent;
   }
 
   h3 {
-      @apply w-full h-auto py-[10px] font-medium text-xl lg:text-2xl flex flex-col gap-3
+      @apply w-full h-auto py-[10px] font-medium text-xl lg:text-2xl flex flex-col gap-3 bg-transparent;
   }
 
   pre, .hljs code {
-    @apply text-base sm:text-justify my-[10px] border-neutral-900 border-1
+    @apply text-base sm:text-justify my-[10px] border-primary border-1 bg-transparent;
+  }
+
+  .katex-html {
+    display: none;
   }
 
   .reveal pre code, .hljs {
-    background-color: black !important;
+    background-color: transparent !important;
   }
   .reveal pre, .hljs {
       box-shadow: none !important;

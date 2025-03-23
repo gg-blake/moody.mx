@@ -34,7 +34,7 @@ export default async function Photobook() {
     const result: PhotosResponse = await response.json();
 
     return (
-        <div id="photos" className="flex flex-col gap-3 w-screen">
+        <div id="photos" className="flex flex-col gap-3 w-screen h-[50vh]">
             <Carousel heading="Photos">
                 {result.items && result.items.map((photo: Photo, index: number) => <PhotoEntry key={index} photo={photo} />)}
             </Carousel>

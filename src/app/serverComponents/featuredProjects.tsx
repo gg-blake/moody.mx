@@ -11,6 +11,8 @@ import plusJakartaSans from '../../../styles/fonts';
 import 'highlight.js/styles/github-dark.css';
 import { Project } from '@/lib/types';
 import { Octokit } from "@octokit/rest";
+import Image from 'next/image';
+import DrawerTrigger from '../clientComponents/drawerTrigger';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -48,60 +50,54 @@ interface ProjectEntry {
     commitAPIUrl?: string;
 }
 
-function DrawerTrigger({ project }: { project: Project }) {
+
+
+function ProjectMiniView({ project }: { project: Project }) {
     return (
-        <GenericDrawerTrigger className="rounded-none flex text-blue-400 text-left flex-col">
-            <CardTitle className="text-3xl font-light text-left"><a>{project.name}</a></CardTitle>
-            <span className='-ml-1 mt-3'>
-            {project.topics.map((topic: string, index: number) =>
-                <Badge key={index} variant="outline" className='text-white mx-1 text-[10px] rounded-none inline-block'>{topic}</Badge>
-            )}
-            </span>
-            <CardDescription>
-                {project.description}
-            </CardDescription>
-        </GenericDrawerTrigger>
+        <div className="rounded-none border-primary border-1 border-b-0 flex text-left flex-col justify-between h-full">
+            <div className='flex flex-col gap-3 text-left p-3'>
+                <h1 className="text-3xl font-light text-left py-0 m-0">{project.name}</h1>
+                <span className='-ml-1 py-0'>
+                    {project.topics.map((topic: string, index: number) =>
+                        <Badge key={index} variant="outline" className='text-primary mx-1 border-primary text-[10px] rounded-none inline-block my-0'>{topic}</Badge>
+                    )}
+                </span>
+                <p className="my-0 -mt-1 text-wrap text-start">
+                    {project.description}
+                </p>
+            </div>
+            <DrawerTrigger label="view project details" />
+        </div>
     )
 }
 
-function ProjectEntry({ project }: { project: Project }) {
+function ProjectExpandedView({ project }: { project: Project }) {
     return (
-        <Card className='group bg-transparent text-white h-full rounded-none flex flex-col overflow-hidden'>
-            <CardContent className="py-3">
-                <Drawer>
-                    <DrawerTrigger project={project} />
-                    <DrawerContent className="h-5/6 border-white border-1 rounded-none bg-black z-10000">
-                        <DrawerDescription className='flex w-full max-h-full overflow-y-auto z-[10000] flex-col'>
-                            <Card className='p-3 inherit rounded-none border-none text-white bg-transparent col-span-2 flex-grow w-full'>
-                                <CardHeader className={`p-3 ${plusJakartaSans.className}`}>
-                                    <Heading className='absolute'>{project.name}</Heading>
-                                    <a className="ml-[2px]" href={project.html_url}>Go to this repo →</a>
-                                    <div>
-                                        <Badge variant="outline" className='text-neutral-600 border-neutral-600 m-1 rounded-none'>Created at {new Date(project.created_at).toLocaleDateString().replaceAll("/", ".")}</Badge>
-                                        <Badge variant="outline" className='text-neutral-600 border-neutral-600 m-1 rounded-none'>Updated at {new Date(project.updated_at).toLocaleDateString().replaceAll("/", ".")}</Badge>
-                                        <Badge variant="outline" className='text-neutral-600 border-neutral-600 m-1 rounded-none'>Pushed at {new Date(project.pushed_at).toLocaleDateString().replaceAll("/", ".")}</Badge>
-                                        {project.topics.map((topic: string, index: number) =>
-                                            <Badge key={index} variant="outline" className='text-white m-1 rounded-none'>{topic}</Badge>
-                                        )}</div>
-                                </CardHeader>
-                                <div className={`text-lg font-light text-wrap px-3 overflow-x-hidden ${plusJakartaSans.className}`}>
-                                    <ReactMarkdown
-                                        remarkPlugins={[remarkGfm, remarkBreaks, remarkMath]}
-                                        rehypePlugins={[rehypeHighlight, rehypeKatex]}
-                                    >{project.description_md}</ReactMarkdown>
-                                </div>
-                            </Card>
-                        </DrawerDescription>
-                    </DrawerContent>
-                </Drawer>
-            </CardContent>
-            
-
-        </Card>
+        <DrawerContent style={{ borderRadius: "0px" }} className="h-5/6 border-primary border-t-1 bg-secondary">
+            <DrawerDescription className='flex w-full max-h-full overflow-y-auto flex-col bg-transparent'>
+                <Card className='p-3 inherit rounded-none border-none col-span-2 flex-grow w-full bg-transparent'>
+                    <CardHeader className={`p-3 ${plusJakartaSans.className}`}>
+                        <Heading className='absolute'>{project.name}</Heading>
+                        <a className="ml-[2px]" href={project.html_url}>Go to this repo →</a>
+                        <div>
+                            <Badge variant="outline" className='opacity-50 border-primary m-1 rounded-none'>Created at {new Date(project.created_at).toLocaleDateString().replaceAll("/", ".")}</Badge>
+                            <Badge variant="outline" className='opacity-50 border-primary m-1 rounded-none'>Updated at {new Date(project.updated_at).toLocaleDateString().replaceAll("/", ".")}</Badge>
+                            <Badge variant="outline" className='opacity-50 border-primary m-1 rounded-none'>Pushed at {new Date(project.pushed_at).toLocaleDateString().replaceAll("/", ".")}</Badge>
+                            {project.topics.map((topic: string, index: number) =>
+                                <Badge key={index} variant="outline" className='m-1 rounded-none border-primary'>{topic}</Badge>
+                            )}</div>
+                    </CardHeader>
+                    <div className={`text-lg font-light text-wrap px-3 overflow-x-hidden bg-secondary ${plusJakartaSans.className}`}>
+                        <ReactMarkdown
+                            remarkPlugins={[remarkGfm, remarkBreaks, remarkMath]}
+                            rehypePlugins={[rehypeHighlight, rehypeKatex]}
+                        >{project.description_md}</ReactMarkdown>
+                    </div>
+                </Card>
+            </DrawerDescription>
+        </DrawerContent>
     )
 }
-
-
 
 export default async function FeaturedProjects() {
     const octokit = new Octokit({
@@ -148,7 +144,11 @@ export default async function FeaturedProjects() {
     return (
         <Carousel heading="Projects">
             {projects && projects
-            .map((project: Project, index: number) => <ProjectEntry key={index} project={project} />
+            .map((project: Project, index: number) => 
+                <Drawer key={index}>
+                    <ProjectMiniView project={project} />
+                    <ProjectExpandedView project={project} />
+                </Drawer>
             )}
         </Carousel>
     )

@@ -2,8 +2,8 @@
 
 import Heading from "../clientComponents/heading";
 import 'reactflow/dist/style.css';
-import TimelineEvent from "../clientComponents/timelineEvent";
 import { Program } from "../../lib/types";
+import TimelineEventsOld from "../clientComponents/timelineEvent";
 
 async function getCourses() {
     const sheetsId = process.env.NEXT_PUBLIC_SHARED_SHEETS_ID; // Retrieve the folder ID from the query parameter
@@ -143,12 +143,6 @@ export default async function Timeline() {
     const programs = await getPrograms();
 
     return (
-        <div id="timeline" className="w-full h-auto p-3 flex flex-col gap-3 z-40">
-            <div className="sticky top-[calc(70px+.75rem)] p-3 border-primary-50 border-[1px] box-border z-900 bg-primary-950">
-                <Heading>Timeline</Heading>
-            </div>
-            {programs?.map((program: Program, i: number) => <TimelineEvent key={`timeline-entry-${i}`} program={program} courses={program["Events"]} />)}
-
-        </div>
+        <TimelineEventsOld programs={programs} />
     )
 }

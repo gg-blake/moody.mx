@@ -25,7 +25,8 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",
@@ -34,7 +35,9 @@
     ".next/types/**/*.ts",
     "src/app/api/files/resume/route.js",
     "src/app/api/files/json/courses/fields/route.js",
-    "src/app/api/files/programs/route.js"
+    "src/app/api/files/programs/route.js",
+    "src/app/serverComponents/fetchGithubData.ts",
+    "src/app/api/projects/route.js"
   ],
   "exclude": [
     "node_modules"

@@ -138,7 +138,7 @@
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
+    --secondary: 0 0% 0%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
@@ -181,7 +181,7 @@
   }
 
   h1 {
-    @apply w-full h-auto py-6 font-medium text-4xl lg:text-6xl flex flex-col gap-3 bg-transparent;
+    @apply w-full h-auto py-6 text-primary font-medium text-4xl lg:text-6xl flex flex-col gap-3 bg-transparent;
   }
 
   p, li {

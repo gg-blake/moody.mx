@@ -245,7 +245,7 @@ function PhotoMiniView({ photo }: { photo: Photo }) {
 
             </div>
             {!isLoaded && <LoadingImage />}
-            <DrawerTrigger label="view photo details" />
+            <DrawerTrigger className="border-b-1" label="view photo details" />
         </div>
     )
 

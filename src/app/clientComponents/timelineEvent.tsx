@@ -1,126 +1,186 @@
 "use client"
-import { useState, use, ReactNode, useEffect, useRef } from "react";
+import { ReactNode } from "react"
 import { Program, Course } from "../../lib/types";
-import Marquee from "react-fast-marquee";
-import { Dispatch, SetStateAction } from "react";
-import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Badge } from "@/components/ui/badge";
+import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import DrawerTrigger from "./drawerTrigger";
+import { Calendar, MapPin, Building2 as Building, SquareUser } from "lucide-react";
 
-
-function CourseEvent({ course, index, focusedEvent, onClick, onReset }: { course: Course, index: number, focusedEvent: number, onClick: () => void, onReset: () => void }) {
-    const visibility = (focusedEvent == index || focusedEvent == -1) ? "visible" : "hidden";
-    const height = focusedEvent == index ? "100%" : "auto";
-
-    // <div style={{visibility: visibility}} className="hidden md:visible md:mb-1 mt-2 md:flex flex-wrap text-[.6rem] gap-1">{event.tags.map((tag, i) => <span key={`event-tag-${i}`} className="border-[1px] box-border border-primary-50 px-[3px] leading-none py-[2px]">{tag}</span>)}</div>
-
+function CourseEvent({ course, index }: { course: Course, index: number}) {
     return (
-        <>
-            {
-                visibility == "visible" &&
-                <div onClick={focusedEvent == -1 ? onClick : undefined} className="group relative lg:hover:w-[calc(100%_+_30px)] pr-0 lg:hover:pr-[30px] border-[1px] border-primary transition-all flex flex-col h-auto min-w-[calc(100%_-_30px)] lg:min-w-[calc(min(calc(100%_-_30px),270px))] z-40">
-                    <div className="w-full h-[10px] bg-primary z-50"></div>
-                    <div className="p-3 w-full">
-                        <h2 className="text-xs font-bold leading-tight z-50 opacity-80">{course["Course ID"]}</h2>
-                        <h3 className="text-lg font-bold leading-tight z-50 group-hover:underline">{course["Course Name"]}</h3>
+        <div className="w-full h-full max-h-[33vh] relative overflow-hidden flex-col flex justify-between">
+            <div className="flex flex-col gap-3 text-left p-3">
+                <h1 className="text-3xl font-light text-left py-0 m-0">{course["Course Name"]}</h1>
+                <EventTags course={course} className="font-medium text-[10px]" />
+                <p className="my-0 -mt-1 text-wrap text-start">
+                    {course["Description"]}
+                </p>
+            </div>
+            <EventDrawer course={course} bottomBorder={index != 1}>
+                <Calendar className="stroke-primary ml-3" width={12} height={12} />
+                <div className="ml-3">{course["Start Date"]}</div>
+            </EventDrawer>
+        </div>
+        
+    )
+}
 
-                        <svg className="absolute visible fill-primary transition-all md:hidden right-[3px] top-3 scale-50 animate-pulse" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M419-80q-28 0-52.5-12T325-126L107-403l19-20q20-21 48-25t52 11l74 45v-328q0-17 11.5-28.5T340-760q17 0 29 11.5t12 28.5v472l-97-60 104 133q6 7 14 11t17 4h221q33 0 56.5-23.5T720-240v-160q0-17-11.5-28.5T680-440H461v-80h219q50 0 85 35t35 85v160q0 66-47 113T640-80H419ZM167-620q-13-22-20-47.5t-7-52.5q0-83 58.5-141.5T340-920q83 0 141.5 58.5T540-720q0 27-7 52.5T513-620l-69-40q8-14 12-28.5t4-31.5q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 17 4 31.5t12 28.5l-69 40Zm335 280Z" /></svg>
-                        <div className="hidden absolute border-t-[10px] border-primary right-0 top-0 w-[30px] h-full group-hover:opacity-1 opacity-0 transition-opacity md:visible md:flex justify-center items-center">
-                            <svg className="fill-primary transition-all" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" /></svg>
+function ProgramEvent({ program }: {program: Program}) {
+    return (
+        <div className="w-full h-full flex flex-col gap-3 text-left p-3 border-primary border-1">
+            <h1 className="text-3xl font-light text-left py-0 m-0">{program["Program Name"]}</h1>
+            <EventTags program={program} />
+            <p className="my-0 -mt-1 text-wrap text-start">
+                {program["Program Description"]}
+            </p>
+        </div>
+    )
+}
+
+function CourseCarousel({ program }: { program: Program}) {
+    return (
+        <Carousel className="w-full h-auto max-h-full grid grid-cols-[auto_auto_auto] grid-rows-1 relative">
+            <CarouselPrevious className='bg-secondary rounded-none h-auto stroke-primary border-primary m-0 relative left-0 right-0 mr-3' />
+            <CarouselContent className="mx-[1px] h-full">
+                {program["Events"].filter((course: Course, index: number) => index % 2 == 0).map((course: Course, index: number) =>
+                    <CarouselItem key={index} className="lg:basis-1/2 xl:basis-1/3 p-0 border-1 not-first:border-l-0 border-primary">
+                        <div className="w-full h-full grid grid-rows-2 grid-cols-1">
+                            <CourseEvent course={course} index={0} />
+                            {2 * index + 1 < program["Events"].length &&
+                                <CourseEvent course={program["Events"][2 * index + 1]} index={1} />
+                            }
                         </div>
-                        {index == focusedEvent && <p className="text-sm font-normal text-left sm:text-justify">{course["Description"]}</p>}
-                        {index == focusedEvent && <div onClick={focusedEvent != -1 ? onReset : undefined} className="group p-[2px] border-[1px] border-primary-50 inline-block mt-3 active:bg-primary-50 transition-colors">
-                            <svg className="fill-primary transition-all group-active:fill-primary-950" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg>
-                        </div>}
-                    </div>
-                </div>
-            }
-        </>
+                    </CarouselItem>
+                )}
+            </CarouselContent>
+            <CarouselNext className='bg-secondary rounded-none h-auto flex stroke-primary border-primary m-0  relative left-0 right-0 ml-3' />
+        </Carousel>
     )
 }
 
-function TimelineEventOld({ program, courses }: { program: Program, courses: Course[] }) {
-    const [focusedEvent, setFocusedEvent] = useState<number>(-1);
-
+function EventDrawer({children, bottomBorder, course, program}: {children: ReactNode[], bottomBorder: boolean, course?: Course, program?: Program}) {
     return (
-        <div className="flex flex-col sm:flex-row gap-3">
-            <div className="w-full sm:max-w-[400px] h-auto p-3 box-border border-[1px] border-primary flex flex-col gap-[5px]">
-                <h2 className="text-primary opacity-80 text-sm font-bold p-[3px] m-0">{program["Location"]}</h2>
-                <h1 className="text-primary text-4xl font-bold p-[3px] m-0">{program["Program Name"]}</h1>
-                <div className="text-base font-normal p-[3px] m-0 w-full text-left sm:text-justify">{program["Program Description"]}</div>
+        <div className="absolute bottom-0 w-full h-auto">
+            
+            <Drawer>
+                <DrawerTrigger className={bottomBorder ? "border-b-1" : "border-b-0"} label="expand" />
+                <EventDrawerContent course={course} program={program} />
+            </Drawer>
+        </div>
+    )
+}
+
+function EventTags({ course, program, className }: { course?: Course, program?: Program, className?: string }) {
+    return (
+        <span className={`-ml-1 font-bold text-primary gap-2 flex flex-row flex-wrap ${className}`}>
+            <Badge variant="outline" className={`border-primary font-medium inline-flex rounded-none my-0 items-center gap-3 ${className}`}>
+                <Calendar className="stroke-primary w-auto h-full" />
+                {course && course["Start Date"]}
+                {program && `${program["Start"]} - ${program["End"]}`}
+            </Badge>
+            <Badge variant="outline" className={`border-primary font-medium rounded-none my-0 inline-flex items-center gap-3 ${className}`}>
+                <MapPin className="stroke-primary w-auto h-full" />
+                {course && course["Location"]}
+                {program && program["Location"]}
+            </Badge>
+            {program &&
+                <Badge variant="outline" className={`border-primary font-medium rounded-none my-0 inline-flex items-center gap-3 ${className}`}>
+                    <Building className="stroke-primary w-auto h-full" />
+                    {program["Organization"]}
+                </Badge>
+            }
+            {course &&
+                <Badge variant="outline" className={`border-primary font-medium rounded-none my-0 inline-flex items-center gap-3 ${className}`}>
+                    <SquareUser className="stroke-primary w-auto h-full" />
+                    {course["Professor"]}
+                </Badge>
+            }
+        </span>
+    )
+}
+
+function EventDrawerContent({ course, program }: { course?: Course, program?: Program }) {
+    return (
+        <DrawerContent style={{ borderRadius: "0px" }} className=" bg-secondary p-3 border-t-1 h-auto w-screen border-primary flex flex-col gap-3">
+            <h1 className="text-primary m-0">{course && `${course["Course ID"]} - ${course["Course Name"]}`}{program && program["Program Name"]}</h1>
+            <EventTags program={program} course={course} className="font-light text-[16px]" />
+            <p className="text-primary md:text-lg">{course && course["Description"]}{program && program["Program Description"]}</p>
+        </DrawerContent>
+    )
+}
+
+function EventDrawerMobile({ course }: { course: Course}) {
+    return (
+        <Drawer>
+            <DrawerTrigger className="border-b-0 justify-start p-3" label={course["Course Name"]} condenseForMobile={false} />
+            <EventDrawerContent course={course} />
+        </Drawer>
+    )
+}
+
+export default function TimelineClient({ programs }: { programs: Program[]}) {
+    return (
+        <div className="flex flex-col w-screen h-[max(auto,_100vh)">
+            <Tabs defaultValue={programs.length > 0 ? programs[0]["Program Name"] : ""} className="w-full h-auto p-3 m-0 flex flex-col md:flex-row gap-3">
+                <TabsList className="flex flex-col w-full md:max-w-[400px] h-full items-start  m-0 p-0 gap-0 border-b-1 border-primary rounded-none bg-secondary">
+                    {programs.map((program: Program, index: number) =>
+                        <>
+                            <TabsTrigger style={{ flexGrow: "0" }} className="m-0 p-0 border-0 w-full justify-start h-[100px]" key={index} value={program["Program Name"]}>
+                                <div className="flex flex-row w-full justify-between items-center p-3 relative border-t-1 border-l-1 border-r-1 border-primary hover:text-secondary hover:bg-primary">
+                                    <div className="w-auto">
+                                        {program["Program Name"]}
+                                    </div>
+                                </div>
+                            </TabsTrigger>
+                            {
+                                program["Events"].length > 0 &&
+                                <TabsContent className="hidden md:block flex-grow relative border-1 border-b-0 border-primary" key={index} value={program["Program Name"]}>
+                                    <div className="w-full h-auto max-h-full overflow-y-clip relative p-3">
+
+                                        <div className="p-0 text-wrap h-auto max-h-full text-left text-primary">
+                                            {program["Program Description"]}
+                                        </div>
+                                    </div>
+                                    <EventDrawer program={program} bottomBorder={false}>
+                                        <Calendar className="stroke-primary ml-3" width={12} height={12} />
+                                        <div className="ml-3">{program["Start"]}-{program["End"]}</div>
+                                    </EventDrawer>
+                                </TabsContent>
+                            }
+                            <TabsContent className="block md:hidden flex-grow relative border-1 border-b-0 border-primary" key={index} value={program["Program Name"]}>
+                                <div className="w-full h-auto max-h-full overflow-y-clip relative p-3 flex flex-col gap-3">
+                                    <div className="p-0 text-wrap h-auto max-h-full text-left text-primary pb-3">
+                                        {program["Program Description"]}
+                                    </div>
+                                    <EventTags program={program} className="font-medium text-[10px]" />
+                                </div>
+                                {
+                                    program["Events"].map((course: Course, index: number) => 
+                                        <EventDrawerMobile key={`event-drawer-mobile-${index}`} course={course} />
+                                    )
+                                }
+                            </TabsContent>
+                        </>
+                    )}
+                </TabsList>
+                {programs.map((program: Program, index: number) =>
+                    <TabsContent className="hidden md:block" key={index} value={program["Program Name"]}>
+                        {
+                            program["Events"].length > 0 &&
+                            <CourseCarousel key={`course-carousel-${index}`} program={program} />
+                        }
+                        {
+                            program["Events"].length == 0 &&
+                            <ProgramEvent key={`program-event-${index}`} program={program} />
+                        }
+                    </TabsContent>
+                )}
+            </Tabs>
+            <div className="flex-grow w-full">
+
             </div>
-            <div style={{ maxWidth: focusedEvent != -1 ? "min(600px, 100%)" : "300px" }} className="w-auto h-auto max-w-full lg:max-w-[300px] flex flex-col gap-3">{courses?.map((course: Course, i: number) => <CourseEvent key={`event-item-${i}`} index={i} course={course} focusedEvent={focusedEvent} onClick={() => setFocusedEvent(i)} onReset={() => setFocusedEvent(-1)} />)}</div>
-        </div>
-    )
-}
-
-export default function TimelineEventsOld({ programs }: { programs: Program[] }) {
-    return (
-        <div className="p-3 gap-3 w-full h-auto flex flex-col border-b-1 border-primary">
-            {programs?.map((program: Program, i: number) => <TimelineEventOld key={`timeline-event-${i}`} program={program} courses={program["Events"]} />)}
-        </div>
-    )
-}
-
-function TimelineEvent({ program, currentProgram, setCurrentProgram, currentCourse, setCurrentCourse }: { program: Program, currentProgram: Program | null, setCurrentProgram: Dispatch<SetStateAction<Program | null>>, currentCourse: Course | null, setCurrentCourse: Dispatch<SetStateAction<Course | null>> }) {
-    const [hovered, setHovered] = useState<boolean>(false);
-
-    const handleMouseOver = () => {
-        setHovered(true);
-    }
-
-    const handleMouseOut = () => {
-        setHovered(false);
-    }
-
-    const handleClick = () => {
-        if (currentProgram && currentProgram["Program Name"] == program["Program Name"]) {
-            setCurrentProgram(null);
-            return;
-        }
-        setCurrentProgram(program);
-    }
-
-    return (
-        <div  onMouseOver={() => handleMouseOver()} onMouseOut={() => handleMouseOut()} onClick={() => handleClick()} className="flex flex-col group font-mono text-9xl opacity-100 relative">
-            {
-                program["Events"].length > 0 &&
-                <div style={{ bottom: (hovered || (currentProgram ? currentProgram["Program Name"] == program["Program Name"] : false)) ? "100%" : "0%", zIndex: (hovered || (currentProgram ? currentProgram["Program Name"] == program["Program Name"] : false)) ? "100" : "0" }} className="w-auto overflow-x-scroll max-w-full h-auto bg-secondary absolute bottom-0 flex flex-row">
-                    {program["Events"].map((event: Course, i: number) => <div key={`event-${i}`} className="text-primary text-sm px-3 py-1 border-1 border-l-0 border-b-0 border-primary">{event["Course ID"]}</div>)}
-                </div>
-            }
-            <div className="transition-all relative overflow-hidden">
-                <div style={{ color: hovered || (currentProgram ? currentProgram["Program Name"] == program["Program Name"] : false) ? "red" : "black" }} className="absolute -top-full group-hover:top-0 w-full bg-primary text-secondary text-nowrap transition-all">
-                    {program["Program Name"]}
-                </div>
-                <Marquee style={{ color: (hovered || (currentProgram ? currentProgram["Program Name"] == program["Program Name"] : false)) ? "red" : "black" }} autoFill={true} pauseOnHover={true} className="absolute top-0 border-t-1 border-primary bg-secondary group-hover:top-full  transition-all m-0">
-                    {program["Program Name"]}
-                </Marquee>
-            </div>
-        </div>
-    )
-}
-
-function TimelineClient({ programs }: { programs: Program[]}) {
-    const [currentProgram, setCurrentProgram] = useState<Program | null>(null);
-    const [currentCourse, setCurrentCourse] = useState <Course | null>(null);
-
-    useEffect(() => {
-        if (!currentProgram) return;
-        console.log(currentProgram);
-    }, [currentProgram])
-
-    return (
-        <div className="w-full h-auto flex flex-col border-b-1 border-primary">
-            {
-            programs?.map((program: Program, i: number) => 
-            <TimelineEvent 
-            key={`timeline-event-${i}`} 
-            program={program} 
-            currentProgram={currentProgram} 
-            setCurrentProgram={setCurrentProgram} 
-            currentCourse={currentCourse} 
-            setCurrentCourse={setCurrentCourse} />)
-            }
         </div>
     )
 }

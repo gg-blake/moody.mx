@@ -1,8 +1,3 @@
-import { useEffect, useState, use } from "react";
-import EXIF from "exif-js";
-import Heading from "../clientComponents/heading";
-import { ImageResponse } from "next/server";
-import Image from 'next/image';
 import Carousel from "../clientComponents/carousel";
 import PhotoEntry from "./photoEntry";
 import { PhotosResponse, Photo } from "@/lib/types";

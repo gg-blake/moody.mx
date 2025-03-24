@@ -1,9 +1,9 @@
 
 
-import Heading from "../clientComponents/heading";
 import 'reactflow/dist/style.css';
 import { Program } from "../../lib/types";
-import TimelineEventsOld from "../clientComponents/timelineEvent";
+import TimelineClient from "../clientComponents/timelineEvent";
+import Heading from "../clientComponents/heading";
 
 async function getCourses() {
     const sheetsId = process.env.NEXT_PUBLIC_SHARED_SHEETS_ID; // Retrieve the folder ID from the query parameter
@@ -143,6 +143,11 @@ export default async function Timeline() {
     const programs = await getPrograms();
 
     return (
-        <TimelineEventsOld programs={programs} />
+        <>
+            <div className="px-3 w-screen h-auto">
+                <Heading className='border-primary border-1 p-3 text-wrap'>Timeline</Heading>
+            </div>
+            <TimelineClient programs={programs} />
+        </>
     )
 }

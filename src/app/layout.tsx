@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { ThemeProvider } from "./clientComponents/themeProvider";
 import { Analytics } from "@vercel/analytics/react";
+import NavigationMenu from "./clientComponents/navigationMenu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
+        <NavigationMenu />
         {children}
         <Analytics />
       </ThemeProvider></body>

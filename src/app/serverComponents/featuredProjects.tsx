@@ -1,4 +1,3 @@
-import { useEffect, useState, useRef, Dispatch, SetStateAction, createContext, useContext, use } from 'react';
 import Heading from '../clientComponents/heading';
 import { Inter } from "next/font/google";
 import remarkGfm from 'remark-gfm';
@@ -66,7 +65,7 @@ function ProjectMiniView({ project }: { project: Project }) {
                     {project.description}
                 </p>
             </div>
-            <DrawerTrigger label="view project details" />
+            <DrawerTrigger className="border-b-1" label="view project details" />
         </div>
     )
 }

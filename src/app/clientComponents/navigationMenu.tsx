@@ -9,6 +9,8 @@ import {
     NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 
+import ThemeToggle from './themeToggle';
+
 import NavigationMenuLink from "./navigationMenuLink";
 import { useEffect, useRef } from "react";
 
@@ -36,10 +38,11 @@ export default function NavigationMenu() {
     }, [])
 
     return (
-        <GenericNavigationMenu ref={navRef} className="sticky top-0 z-[99999] bg-transparent p-3 flex flex-row gap-3">
+        <GenericNavigationMenu ref={navRef} className="sticky hidden top-0 z-[99999] bg-transparent p-3 flex-row flex-wrap gap-3">
             <NavigationMenuLink href="#timeline">Timeline</NavigationMenuLink>
             <NavigationMenuLink href="#projects">Projects</NavigationMenuLink>
             <NavigationMenuLink href="#photos">Photos</NavigationMenuLink>
+            <ThemeToggle />
         </GenericNavigationMenu>
     )
 }

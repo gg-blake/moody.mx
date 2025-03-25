@@ -22,7 +22,7 @@ export default function ThemeToggle() {
     }, [])
 
     return (
-        <div className="absolute top-4 right-4 z-10">
+        <div className="h-full">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="icon" className="border-primary text-primary bg-secondary hover:bg-primary hover:text-secondary hover:border-secondary rounded-none">

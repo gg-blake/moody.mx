@@ -9,7 +9,7 @@ import Statement from './clientComponents/statement';
 
 export default function Home() {
   return (
-    <div className={`w-full overflow-y-visible bg-secondary text-primary overflow-x-hidden z-0 ${plusJakartaSans.className}`}>
+    <div className={`w-full overflow-y-visible bg-secondary text-primary overflow-x-hidden z-0 font-mono`}>
       
       <Profile />
       <Statement src="profile-cropped.jpg">{"A full-time student and part-time developer based in Boston, Massachusetts. Currently doing research in Machine Learning and Artificial Intelligence, focusing in LLM research and design while pursuing a degree in Computer Science at UMass Boston. Here's my "}<a className='text-blue-400 underline' href="https://www.moody.mx/api/files/resume" target="_blank" rel="noreferrer">resume</a>{"as an API route to sync with Google Drive."}</Statement>

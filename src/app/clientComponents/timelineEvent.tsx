@@ -74,7 +74,7 @@ function EventDrawer({children, bottomBorder, course, program}: {children: React
 
 function EventTags({ course, program, className }: { course?: Course, program?: Program, className?: string }) {
     return (
-        <span className={`-ml-1 font-bold text-primary gap-2 flex flex-row flex-wrap ${className}`}>
+        <span className={`font-bold text-primary gap-2 flex flex-row flex-wrap ${className}`}>
             <Badge variant="outline" className={`border-primary font-medium inline-flex rounded-none my-0 items-center gap-3 ${className}`}>
                 <Calendar className="stroke-primary w-auto h-full" />
                 {course && course["Start Date"]}

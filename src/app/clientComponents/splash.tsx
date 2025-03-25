@@ -7,7 +7,7 @@ import "../../../styles/globals.css";
 
 import Banner from './banner';
 import Links from './links';
-import ThemeToggle from './themeToggle';
+
 
 
 
@@ -18,7 +18,6 @@ export default function Splash() {
             <Banner speed={15}>This website was meticulously designed and developed by me. To learn more about the technologies and programs used in the project, take a minute to check out my Github.</Banner>
             
             <Links />
-            <ThemeToggle />
         </div>
     )
 }

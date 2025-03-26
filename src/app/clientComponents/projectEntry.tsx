@@ -39,27 +39,38 @@ import {
 } from "@/components/ui/drawer";
 
 import { useQRCode } from 'next-qrcode';
+import { useBarcode } from 'next-barcode';
+
+function QRCode({ project, className }: { project: Project, className: string}) {
+    const { SVG } = useQRCode();
+
+    return (
+        <div className={`absolute bg-secondary z-0 mix-blend-difference ${ className }`}>
+            <SVG
+                text={project.html_url}
+                options={{
+                    margin: 0,
+                    width: 25,
+                    scale: 5,
+                    color: {
+                        dark: '#FFFFFFFF',
+                        light: '#000000FF',
+                    },
+                }}
+            />
+            <div className="absolute top-0 left-0 w-full h-full bg-secondary mix-blend-difference"></div>
+        </div>
+    )
+}
 
 export function ProjectMiniView({ project }: { project: Project }) {
     const { SVG } = useQRCode();
 
     return (
-        <div className="rounded-none border-primary border-1 border-b-0 pb-[0.5px] flex text-left flex-col justify-between h-full relative">
-            <div className="absolute top-0 right-0 p-3 border-b-1 border-l-1 border-primary bg-secondary z-100 shadow-sm mix-blend-difference">
-                <SVG
-                    text={project.html_url}
-                    options={{
-                        margin: 0,
-                        width: 30,
-                        scale: 5,
-                        color: {
-                            dark: '#000000FF',
-                            light: '#FFFFFFFF',
-                        },
-                    }}
-                />
-            </div>
-            <div className='flex flex-col gap-3 text-left p-3'>
+        <div className="rounded-none border-primary border-1 border-b-0 pb-[0.5px] flex text-left flex-col justify-start h-full relative">
+            
+            
+            <div className='flex flex-col gap-3 text-left p-3 flex-grow relative'>
                 <h1 className="text-3xl font-light text-left py-0 m-0">{project.name}</h1>
                 <span className='-ml-1 py-0'>
                     {project.topics.map((topic: string, index: number) =>
@@ -69,6 +80,10 @@ export function ProjectMiniView({ project }: { project: Project }) {
                 <p className="my-0 -mt-1 text-wrap text-start">
                     {project.description}
                 </p>
+                <QRCode project={project} className='left-3 bottom-3 -rotate-90 hover:scale-200 transition-transform' />
+                <QRCode project={project} className='right-3 bottom-3 rotate-180 hover:scale-200 transition-transform' />
+                <QRCode project={project} className='right-3 top-3 rotate-90 hover:scale-200 transition-transform' />
+
             </div>
             <DrawerTrigger className="border-b-1 mb-0" label="view project details" />
         </div>

@@ -33,6 +33,7 @@
     "highlight.js": "^11.11.1",
     "lucide-react": "^0.479.0",
     "next": "^15.2.2",
+    "next-barcode": "^1.5.0",
     "next-qrcode": "^2.5.1",
     "next-themes": "^0.4.6",
     "radix-ui": "^1.1.3",

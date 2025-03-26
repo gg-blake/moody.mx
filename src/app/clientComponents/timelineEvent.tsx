@@ -45,7 +45,7 @@ function CourseCarousel({ program }: { program: Program}) {
             <CarouselPrevious className='bg-secondary rounded-none h-auto stroke-primary border-primary m-0 relative left-0 right-0 mr-3' />
             <CarouselContent className="mx-[1px] h-full">
                 {program["Events"].filter((course: Course, index: number) => index % 2 == 0).map((course: Course, index: number) =>
-                    <CarouselItem key={index} className="lg:basis-1/2 xl:basis-1/3 p-0 border-1 not-first:border-l-0 border-primary">
+                    <CarouselItem key={`course-carousel-item-${index}`} className="lg:basis-1/2 xl:basis-1/3 p-0 border-1 not-first:border-l-0 border-primary">
                         <div className="w-full h-full grid grid-rows-2 grid-cols-1">
                             <CourseEvent course={course} index={0} />
                             {2 * index + 1 < program["Events"].length &&
@@ -127,7 +127,7 @@ export default function TimelineClient({ programs }: { programs: Program[]}) {
                 <TabsList className="flex flex-col w-full md:max-w-[400px] h-full items-start  m-0 p-0 gap-0 border-b-1 border-primary rounded-none bg-secondary">
                     {programs.map((program: Program, index: number) =>
                         <>
-                            <TabsTrigger style={{ flexGrow: "0" }} className="m-0 p-0 border-0 w-full justify-start h-[100px]" key={index} value={program["Program Name"]}>
+                            <TabsTrigger style={{ flexGrow: "0" }} className="m-0 p-0 border-0 w-full justify-start h-[100px]" key={`tabs-trigger-timeline-${index}`} value={program["Program Name"]}>
                                 <div className="flex flex-row w-full justify-between items-center p-3 relative border-t-1 border-l-1 border-r-1 border-primary hover:text-secondary hover:bg-primary">
                                     <div className="w-auto">
                                         {program["Program Name"]}
@@ -136,7 +136,7 @@ export default function TimelineClient({ programs }: { programs: Program[]}) {
                             </TabsTrigger>
                             {
                                 program["Events"].length > 0 &&
-                                <TabsContent className="hidden md:block flex-grow relative border-1 border-b-0 border-primary" key={index} value={program["Program Name"]}>
+                                <TabsContent key={`tabs-content-${index}`} className="hidden md:block flex-grow relative border-1 border-b-0 border-primary" value={program["Program Name"]}>
                                     <div className="w-full h-auto max-h-full overflow-y-clip relative p-3">
 
                                         <div className="p-0 text-wrap h-auto max-h-full text-left text-primary">
@@ -149,7 +149,7 @@ export default function TimelineClient({ programs }: { programs: Program[]}) {
                                     </EventDrawer>
                                 </TabsContent>
                             }
-                            <TabsContent className="block md:hidden flex-grow relative border-1 border-b-0 border-primary" key={index} value={program["Program Name"]}>
+                            <TabsContent key={`tabs-content-${index}-alt`} className="block md:hidden flex-grow relative border-1 border-b-0 border-primary" value={program["Program Name"]}>
                                 <div className="w-full h-auto max-h-full overflow-y-clip relative p-3 flex flex-col gap-3">
                                     <div className="p-0 text-wrap h-auto max-h-full text-left text-primary pb-3">
                                         {program["Program Description"]}

@@ -64,7 +64,6 @@ function QRCode({ project, className }: { project: Project, className: string}) 
 }
 
 export function ProjectMiniView({ project }: { project: Project }) {
-    const { SVG } = useQRCode();
 
     return (
         <div className="rounded-none border-primary border-1 border-b-0 pb-[0.5px] flex text-left flex-col justify-start h-full relative">
@@ -81,8 +80,7 @@ export function ProjectMiniView({ project }: { project: Project }) {
                     {project.description}
                 </p>
                 <QRCode project={project} className='left-3 bottom-3 -rotate-90 hover:scale-200 transition-transform' />
-                <QRCode project={project} className='right-3 bottom-3 rotate-180 hover:scale-200 transition-transform' />
-                <QRCode project={project} className='right-3 top-3 rotate-90 hover:scale-200 transition-transform' />
+                
 
             </div>
             <DrawerTrigger className="border-b-1 mb-0" label="view project details" />

@@ -21,7 +21,7 @@ export default function Links() {
                 <Link href="https://www.instagram.com/blayyyyyk/">Instagram</Link>
                 <Link href="https://github.com/gg-blake" >Github</Link>
                 <Link href="https://www.linkedin.com/in/blake-moody-2626ba11b/">LinkedIn</Link>
-                <Link href="blake@mpsych.org">Email</Link>
+                <Link href="mailto:blake@mpsych.org">Email</Link>
             </div>
             <div className='absolute top-6 right-6'>
             </div>

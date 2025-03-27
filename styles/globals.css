@@ -90,19 +90,6 @@
 
 @layer base {
   :root {
-    --color-primary-50:  0deg, 0%, 98%
-    --color-primary-100: 0deg, 0%, 96%
-    --color-primary-200: 0deg, 0%, 90%
-    --color-primary-300: 0deg, 0%, 83%
-    --color-primary-400: 0deg, 0%, 64%
-    --color-primary-500: 0deg, 0%, 45%
-    --color-primary-600: 0deg, 0%, 32%
-    --color-primary-700: 0deg, 0%, 25%
-    --color-primary-800: 0deg, 0%, 15%
-    --color-primary-900: 0deg, 0%, 9%
-    --color-primary-950: 0deg, 0%, 4%
-    --color-secondary: 111, 114, 185;
-    /* ... */
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -136,9 +123,9 @@
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
+    --primary: 0 0% 80%;
     --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 0%;
+    --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;

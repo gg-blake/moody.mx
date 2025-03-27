@@ -74,25 +74,25 @@ function EventDrawer({children, bottomBorder, course, program}: {children: React
 
 function EventTags({ course, program, className }: { course?: Course, program?: Program, className?: string }) {
     return (
-        <span className={`font-bold text-primary gap-2 flex flex-row flex-wrap ${className}`}>
-            <Badge variant="outline" className={`border-primary font-medium inline-flex rounded-none my-0 items-center gap-3 ${className}`}>
+        <span className={`font-bold gap-2 flex flex-row flex-wrap ${className}`}>
+            <Badge variant="outline" className={`border-primary font-medium inline-flex rounded-none my-0 items-center gap-3 text-primary ${className}`}>
                 <Calendar className="stroke-primary w-auto h-full" />
                 {course && course["Start Date"]}
                 {program && `${program["Start"]} - ${program["End"]}`}
             </Badge>
-            <Badge variant="outline" className={`border-primary font-medium rounded-none my-0 inline-flex items-center gap-3 ${className}`}>
+            <Badge variant="outline" className={`border-primary font-medium rounded-none my-0 inline-flex items-center gap-3 text-primary ${className}`}>
                 <MapPin className="stroke-primary w-auto h-full" />
                 {course && course["Location"]}
                 {program && program["Location"]}
             </Badge>
             {program &&
-                <Badge variant="outline" className={`border-primary font-medium rounded-none my-0 inline-flex items-center gap-3 ${className}`}>
+                <Badge variant="outline" className={`border-primary font-medium rounded-none my-0 inline-flex items-center gap-3 text-primary ${className}`}>
                     <Building className="stroke-primary w-auto h-full" />
                     {program["Organization"]}
                 </Badge>
             }
             {course &&
-                <Badge variant="outline" className={`border-primary font-medium rounded-none my-0 inline-flex items-center gap-3 ${className}`}>
+                <Badge variant="outline" className={`border-primary font-medium rounded-none my-0 inline-flex items-center gap-3 text-primary ${className}`}>
                     <SquareUser className="stroke-primary w-auto h-full" />
                     {course["Professor"]}
                 </Badge>
@@ -105,7 +105,7 @@ function EventDrawerContent({ course, program }: { course?: Course, program?: Pr
     return (
         <DrawerContent style={{ borderRadius: "0px" }} className=" bg-secondary p-3 border-t-1 h-auto w-screen border-primary flex flex-col gap-3">
             <h1 className="text-primary m-0">{course && `${course["Course ID"]} - ${course["Course Name"]}`}{program && program["Program Name"]}</h1>
-            <EventTags program={program} course={course} className="font-light text-[16px]" />
+            <EventTags program={program} course={course} className="text-primary font-light text-[16px]" />
             <p className="text-primary md:text-lg">{course && course["Description"]}{program && program["Program Description"]}</p>
         </DrawerContent>
     )

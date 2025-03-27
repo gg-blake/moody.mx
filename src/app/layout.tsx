@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { ThemeProvider } from "./clientComponents/themeProvider";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import NavigationMenu from "./clientComponents/navigationMenu";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,6 +30,7 @@ export default function RootLayout({
         <NavigationMenu />
         {children}
         <Analytics />
+        <SpeedInsights />
       </ThemeProvider></body>
     </html>
   );

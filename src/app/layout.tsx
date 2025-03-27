@@ -29,8 +29,8 @@ export default function RootLayout({
       >
         <NavigationMenu />
         {children}
-        <Analytics />
         <SpeedInsights />
+        <Analytics />
       </ThemeProvider></body>
     </html>
   );
